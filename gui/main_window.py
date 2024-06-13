@@ -3,6 +3,10 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import Qt
 from gui.cmr import AddCmr
+from gui.cmr import AddCmr
+from gui.addDestinatario import AddDestinatario
+from utils import center
+
 
 
 
@@ -13,6 +17,9 @@ class MainWindow(QMainWindow):
         self.setWindowIcon(QIcon('icons/icon.ico'))
         self.setGeometry(450,150,1350,750)
         self.setFixedSize(self.size())
+        self.add_cmr = AddCmr()
+        self.add_destinatario = AddDestinatario()
+        center(self)
         self.UI()
         self.show()
 
@@ -30,6 +37,7 @@ class MainWindow(QMainWindow):
         self.addCMR.triggered.connect(self.openAddCmrWindow)
         self.tb.addSeparator()
         self.addDestinatario = QAction(QIcon('icons/addmember.png'), "Nuovo Destinatario", self)
+        self.addDestinatario.triggered.connect(self.openaddDestinatarioWindow)
         self.tb.addAction(self.addDestinatario)
         # self.addDestinatario.triggered.connect(self.funcaddDestinatario)
         self.tb.addSeparator()
@@ -43,5 +51,7 @@ class MainWindow(QMainWindow):
         self.tb.addSeparator()
 
     def openAddCmrWindow(self):
-        self.addCmrWindow = AddCmr()
-        self.addCmrWindow.show()
+        self.add_cmr.show()
+
+    def openaddDestinatarioWindow(self):
+        self.add_destinatario.show()
