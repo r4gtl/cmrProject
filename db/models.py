@@ -26,7 +26,7 @@ class Destinatario(Base):
     def __str__(self):
         return self.ragione_sociale
 
-class Destinatazione(Base):
+class Destinazione(Base):
     __tablename__ = 'destinazioni'
     id = Column(Integer, primary_key=True)
     ragione_sociale = Column(String, nullable=False)

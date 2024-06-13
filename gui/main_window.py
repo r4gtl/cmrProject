@@ -4,7 +4,10 @@ from PyQt5.QtGui import *
 from PyQt5.QtCore import Qt
 from gui.cmr import AddCmr
 from gui.cmr import AddCmr
-from gui.addDestinatario import AddDestinatario
+from gui.destinatari import ViewDestinatari
+from gui.destinazioni import ViewDestinazioni
+from gui.trasportatori import ViewTrasportatori
+
 from utils import center
 
 
@@ -18,7 +21,10 @@ class MainWindow(QMainWindow):
         self.setGeometry(450,150,1350,750)
         self.setFixedSize(self.size())
         self.add_cmr = AddCmr()
-        self.add_destinatario = AddDestinatario()
+        self.view_destinatari = ViewDestinatari()
+        self.view_destinazioni = ViewDestinazioni()
+        self.view_trasportatori = ViewTrasportatori()
+
         center(self)
         self.UI()
         self.show()
@@ -36,22 +42,31 @@ class MainWindow(QMainWindow):
         self.tb.addAction(self.addCMR)
         self.addCMR.triggered.connect(self.openAddCmrWindow)
         self.tb.addSeparator()
-        self.addDestinatario = QAction(QIcon('icons/addmember.png'), "Nuovo Destinatario", self)
-        self.addDestinatario.triggered.connect(self.openaddDestinatarioWindow)
+        self.addDestinatario = QAction(QIcon('icons/addmember.png'), "Destinatari", self)
+        self.addDestinatario.triggered.connect(self.openViewDestinatarioWindow)
         self.tb.addAction(self.addDestinatario)
         # self.addDestinatario.triggered.connect(self.funcaddDestinatario)
         self.tb.addSeparator()
         self.addDestinazione = QAction(QIcon('icons/destination.png'), "Nuova Destinazione", self)
         self.tb.addAction(self.addDestinazione)
-        # self.addDestinazione.triggered.connect(self.funcaddDestinazione)
+        self.addDestinazione.triggered.connect(self.openViewDestinazioneWindow)
         self.tb.addSeparator()
         self.addTrasportatore = QAction(QIcon('icons/delivery-truck.png'), "Nuovo Trasportatore", self)
         self.tb.addAction(self.addTrasportatore)
-        # self.addTrasportatore.triggered.connect(self.funcaddTrasportatore)
+        self.addTrasportatore.triggered.connect(self.openViewTrasportatoreWindow)
         self.tb.addSeparator()
 
     def openAddCmrWindow(self):
         self.add_cmr.show()
 
-    def openaddDestinatarioWindow(self):
-        self.add_destinatario.show()
+    def openViewDestinatarioWindow(self):
+        self.view_destinatari.show()
+
+    def openViewDestinazioneWindow(self):
+        self.view_destinazioni.show()
+
+    def openViewTrasportatoreWindow(self):
+        self.view_trasportatori.show()
+
+
+

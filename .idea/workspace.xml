@@ -4,20 +4,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d0ac0911-2230-4513-aefb-8fbfb182cc51" name="Changes" comment="first commit">
-      <change afterPath="$PROJECT_DIR$/gui/addDestinatario.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/utils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/cmrProject.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/cmrProject.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="d0ac0911-2230-4513-aefb-8fbfb182cc51" name="Changes" comment="Added new windows">
+      <change afterPath="$PROJECT_DIR$/alembic/README" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/alembic/env.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/alembic/script.py.mako" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/alembic/versions/b30100f716b0_creazione_resto_tabelle.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/alembic/versions/f59ff9dc4a0c_prima_migrazione.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gui/addDestinazione.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gui/addTrasportatore.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gui/destinatari.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gui/destinazioni.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gui/trasportatori.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/alembic/README" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/alembic/env.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/alembic/script.py.mako" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/alembic/versions/b30100f716b0_creazione_resto_tabelle.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/alembic/versions/f59ff9dc4a0c_prima_migrazione.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gui/cmr.py" beforeDir="false" afterPath="$PROJECT_DIR$/gui/cmr.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/db/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gui/addDestinatario.py" beforeDir="false" afterPath="$PROJECT_DIR$/gui/addDestinatario.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gui/main_window.py" beforeDir="false" afterPath="$PROJECT_DIR$/gui/main_window.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,19 +51,22 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "master",
     "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/Users/stefano.LVZZ/PycharmProjects/cmrProject/db",
+    "last_opened_file_path": "C:/Users/stefano.LVZZ/PycharmProjects/cmrProject/gui",
     "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\stefano.LVZZ\PycharmProjects\cmrProject\gui" />
+      <recent name="C:\Users\stefano.LVZZ\PycharmProjects\cmrProject\alembic" />
+      <recent name="C:\Users\stefano.LVZZ\PycharmProjects\cmrProject\alembic\versions" />
       <recent name="C:\Users\stefano.LVZZ\PycharmProjects\cmrProject\db" />
     </key>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-python-sdk-5b207ade9991-746f403e7f0c-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-241.17890.14" />
+        <option value="bundled-python-sdk-babbdf50b680-746f403e7f0c-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-241.15989.155" />
       </set>
     </attachedChunks>
   </component>
@@ -91,11 +95,30 @@
       <option name="project" value="LOCAL" />
       <updated>1718197540756</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Added new windows">
+      <option name="closed" value="true" />
+      <created>1718272382980</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1718272382980</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="first commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="first commit" />
+    <MESSAGE value="Added new windows" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added new windows" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/gui/destinazioni.py</url>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

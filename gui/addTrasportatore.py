@@ -3,11 +3,11 @@ from PyQt5.QtGui import *
 from PyQt5.QtCore import Qt, pyqtSignal
 from utils import center
 from sqlalchemy.exc import IntegrityError
-from db.models import SessionLocal, Destinatario
+from db.models import SessionLocal, Trasportatore
 
 
 
-class CrudDestinatario(QMainWindow):
+class CrudTrasportatore(QMainWindow):
     aboutToClose = pyqtSignal()  # Segnale personalizzato
 
     def __init__(self):
@@ -40,11 +40,11 @@ class CrudDestinatario(QMainWindow):
         # New CMR
         self.addSave = QAction(QIcon('icons/save.png'), "Salva", self)
         self.tb.addAction(self.addSave)
-        self.addSave.triggered.connect(self.save_destinatario)
+        self.addSave.triggered.connect(self.save_trasportatore)
         self.tb.addSeparator()
         self.delete = QAction(QIcon('icons/delete-folder.png'), "Elimina", self)
         self.tb.addAction(self.delete)
-        self.delete.triggered.connect(self.delete_destinatario)
+        self.delete.triggered.connect(self.delete_trasportatore)
         self.tb.addSeparator()
         self.exit = QAction(QIcon('icons/exit.png'), "Esci", self)
         self.exit.triggered.connect(self.close)
@@ -77,8 +77,8 @@ class CrudDestinatario(QMainWindow):
 
         self.mainLayout.addLayout(self.formLayout)
 
-    def save_destinatario(self):
-        # Salvataggio o aggiornamento del destinatario
+    def save_trasportatore(self):
+        # Salvataggio o aggiornamento del trasportatore
         id = self.editId.text()
         ragione_sociale = self.editRagioneSociale.text()
         indirizzo_1 = self.editIndirizzo1.text()
@@ -86,44 +86,45 @@ class CrudDestinatario(QMainWindow):
 
 
 
-        # Se l'ID è vuoto, creiamo un nuovo destinatario
+        # Se l'ID è vuoto, creiamo un nuovo trasportatore
         if not id:
-            new_destinatario = Destinatario(ragione_sociale=ragione_sociale, indirizzo_1=indirizzo_1,
+            new_trasportatore = Trasportatore(ragione_sociale=ragione_sociale, indirizzo_1=indirizzo_1,
                                             indirizzo_2=indirizzo_2,)
                                             #created_at=datetime.date.today())
-            self.session.add(new_destinatario)
+            self.session.add(new_trasportatore)
             self.session.commit()
-            self.editId.setText(str(new_destinatario.id))  # Mostra l'ID appena creato
-            QMessageBox.information(self, "Info", "Destinatario aggiunto correttamente!")
+            self.editId.setText(str(new_trasportatore.id))  # Mostra l'ID appena creato
+            QMessageBox.information(self, "Info", "Trasportatore aggiunto correttamente!")
 
         else:
             # Altrimenti, aggiorniamo il destinatario esistente
-            destinatario = self.session.query(Destinatario).filter_by(id=id).first()
-            if destinatario:
-                destinatario.ragione_sociale = ragione_sociale
-                destinatario.indirizzo_1 = indirizzo_1
-                destinatario.indirizzo_2 = indirizzo_2
+            trasportatore = self.session.query(Trasportatore).filter_by(id=id).first()
+            if trasportatore:
+                trasportatore.ragione_sociale = ragione_sociale
+                trasportatore.indirizzo_1 = indirizzo_1
+                trasportatore.indirizzo_2 = indirizzo_2
                 self.session.commit()
-                QMessageBox.information(self, "Info", "Destinatario modificato correttamente!")
+                QMessageBox.information(self, "Info", "Trasportatore modificato correttamente!")
 
         self.session.close()
         self.close()
 
-    def delete_destinatario(self):
+    def delete_trasportatore(self):
         id = self.editId.text()
         if id:
             # Mostra un messaggio di conferma
             reply = QMessageBox.question(self, 'Conferma di cancellazione',
-                                         'Sei sicuro di voler eliminare questo destinatario?',
+                                         'Sei sicuro di voler eliminare questo trasportatore?',
                                          QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
             if reply == QMessageBox.Yes:
-                # Trova il destinatario da eliminare
-                destinatario = self.session.query(Destinatario).filter_by(id=id).first()
-                if destinatario:
-                    self.session.delete(destinatario)
+                # Trova il trasportatore da eliminare
+                trasportatore = self.session.query(Trasportatore).filter_by(id=id).first()
+                if trasportatore:
+                    self.session.delete(trasportatore)
                     self.session.commit()
                     self.clear_fields()
             self.session.close()
+
             self.close()
 
     def clear_fields(self):
@@ -132,12 +133,13 @@ class CrudDestinatario(QMainWindow):
         self.editIndirizzo1.clear()
         self.editIndirizzo2.clear()
 
-    def load_data(self, destinatario):
-        self.editId.setText(str(destinatario.id))
-        self.editRagioneSociale.setText(destinatario.ragione_sociale)
-        self.editIndirizzo1.setText(destinatario.indirizzo_1)
-        self.editIndirizzo2.setText(destinatario.indirizzo_2)
+    def load_data(self, trasportatore):
+        self.editId.setText(str(trasportatore.id))
+        self.editRagioneSociale.setText(trasportatore.ragione_sociale)
+        self.editIndirizzo1.setText(trasportatore.indirizzo_1)
+        self.editIndirizzo2.setText(trasportatore.indirizzo_2)
 
     def closeEvent(self, event):
         self.aboutToClose.emit()  # Emette il segnale aboutToClose quando la finestra sta per chiudersi
+        self.clear_fields()
         event.accept()
