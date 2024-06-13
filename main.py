@@ -5,8 +5,6 @@ from gui.main_window import MainWindow
 from db.database import init_db
 
 
-
-
 def main():
     init_db()
     app = QApplication(sys.argv)

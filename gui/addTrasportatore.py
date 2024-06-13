@@ -1,7 +1,7 @@
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import Qt, pyqtSignal
-from utils import center
+from utils import center, set_focus_to_widget
 from sqlalchemy.exc import IntegrityError
 from db.models import SessionLocal, Trasportatore
 
@@ -29,6 +29,7 @@ class CrudTrasportatore(QMainWindow):
         self.widgets()
         self.layouts()
         self.toolBar()
+        set_focus_to_widget(self.editRagioneSociale)
 
     def toolBar(self):
         self.tb = self.addToolBar("Tool Bar")
@@ -143,3 +144,4 @@ class CrudTrasportatore(QMainWindow):
         self.aboutToClose.emit()  # Emette il segnale aboutToClose quando la finestra sta per chiudersi
         self.clear_fields()
         event.accept()
+

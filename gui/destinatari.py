@@ -2,7 +2,7 @@ import sys
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import Qt
-from utils import center
+from utils import center, set_focus_to_widget
 from gui.addDestinatario import CrudDestinatario
 from db.models import SessionLocal, Destinatario
 
@@ -30,6 +30,7 @@ class ViewDestinatari(QWidget):
         self.widgets()
         self.layouts()
         self.load_data()
+        set_focus_to_widget(self.entrySearch)
 
 
 

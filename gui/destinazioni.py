@@ -53,12 +53,12 @@ class ViewDestinazioni(QWidget):
         header = self.destinazioniTable.horizontalHeader()
         header.setStretchLastSection(True)
         header.setSectionResizeMode(QHeaderView.Stretch)
+        self.destinazioniTable.cellDoubleClicked.connect(self.table_double_click)
 
         self.entrySearchLabel = QLabel("Cerca Destinazione")
         self.entrySearch = QLineEdit()
         self.entrySearch.textChanged.connect(self.search_destinazioni)
 
-        self.destinazioniTable.cellDoubleClicked.connect(self.table_double_click)
 
 
     def layouts(self):
