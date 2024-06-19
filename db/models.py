@@ -3,6 +3,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 import datetime
 
+
 Base = declarative_base()
 
 class Utente(Base):
@@ -91,4 +92,8 @@ class DettaglioCmr(Base):
 DATABASE_URL = "sqlite:///app.db"
 
 engine = create_engine(DATABASE_URL)
+
+
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+
+

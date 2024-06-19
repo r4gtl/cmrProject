@@ -4,16 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d0ac0911-2230-4513-aefb-8fbfb182cc51" name="Changes" comment="All CRUD operations">
+    <list default="true" id="d0ac0911-2230-4513-aefb-8fbfb182cc51" name="Changes" comment="CMR Table">
+      <change afterPath="$PROJECT_DIR$/drivers/hsqldb.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/drivers/slf4j-api-1.7.36.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/drivers/sqlite-jdbc-3.46.0.0.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gui/ricercaDestinatario.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gui/addDestinatario.py" beforeDir="false" afterPath="$PROJECT_DIR$/gui/addDestinatario.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gui/addDestinazione.py" beforeDir="false" afterPath="$PROJECT_DIR$/gui/addDestinazione.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gui/addTrasportatore.py" beforeDir="false" afterPath="$PROJECT_DIR$/gui/addTrasportatore.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gui/destinatari.py" beforeDir="false" afterPath="$PROJECT_DIR$/gui/destinatari.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gui/destinazioni.py" beforeDir="false" afterPath="$PROJECT_DIR$/gui/destinazioni.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gui/main_window.py" beforeDir="false" afterPath="$PROJECT_DIR$/gui/main_window.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/db/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gui/cmr.py" beforeDir="false" afterPath="$PROJECT_DIR$/gui/cmr.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,19 +37,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Python.cmr.executor": "Run",
-    "Python.main.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "master",
-    "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/Users/stefano.LVZZ/PycharmProjects/cmrProject/gui",
-    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python.cmr.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/stefano.LVZZ/PycharmProjects/cmrProject/drivers&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\stefano.LVZZ\PycharmProjects\cmrProject\drivers" />
       <recent name="C:\Users\stefano.LVZZ\PycharmProjects\cmrProject\gui" />
       <recent name="C:\Users\stefano.LVZZ\PycharmProjects\cmrProject\alembic" />
       <recent name="C:\Users\stefano.LVZZ\PycharmProjects\cmrProject\alembic\versions" />
@@ -106,14 +105,23 @@
       <option name="project" value="LOCAL" />
       <updated>1718288636239</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="CMR Table">
+      <option name="closed" value="true" />
+      <created>1718291897759</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1718291897759</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="first commit" />
     <MESSAGE value="Added new windows" />
     <MESSAGE value="All CRUD operations" />
-    <option name="LAST_COMMIT_MESSAGE" value="All CRUD operations" />
+    <MESSAGE value="CMR Table" />
+    <option name="LAST_COMMIT_MESSAGE" value="CMR Table" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

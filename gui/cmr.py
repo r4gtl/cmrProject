@@ -3,6 +3,8 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import Qt
 from utils import center
+from gui.ricercaDestinatario import RicercaDestinatario
+from db.models import SessionLocal, Destinatario
 
 
 
@@ -16,6 +18,8 @@ class AddCmr(QMainWindow):
         center(self)
         self.central_widget = QWidget()  # Creazione del widget centrale
         self.setCentralWidget(self.central_widget)  # Impostazione del widget centrale
+        self.session = SessionLocal()
+
         self.UI()
 
         #self.show()
@@ -253,6 +257,7 @@ class AddCmr(QMainWindow):
 
         self.btnUtente.clicked.connect(self.update_utente_data)
         self.btnDestinatario.clicked.connect(self.update_destinatario_data)
+        self.btnSearchDestinatario.clicked.connect(self.update_destinatario_data)
         self.btnDestinazione.clicked.connect(self.update_destinazione_data)
         self.btnUpdate.clicked.connect(self.update_data_from_id)
 
@@ -261,8 +266,12 @@ class AddCmr(QMainWindow):
         pass
 
     def update_destinatario_data(self):
-        # Implement logic to fetch and display Destinatario data based on ID
-        pass
+
+        destinatari = self.session.query(Destinatario).all()
+        print(f"Destrinatari: {destinatari}")
+
+        dialog = RicercaDestinatario(destinatari)
+        dialog.exec_()
 
     def update_destinazione_data(self):
         # Implement logic to fetch and display Destinazione data based on ID
@@ -271,3 +280,4 @@ class AddCmr(QMainWindow):
     def update_data_from_id(self):
         # Implement logic to update data based on the entered IDs
         pass
+
