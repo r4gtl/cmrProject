@@ -1,7 +1,10 @@
-from PyQt5.QtWidgets import QDialog, QVBoxLayout, QLineEdit, QTableWidget, QTableWidgetItem, QHeaderView
-
+from PyQt5.QtWidgets import (QDialog, QVBoxLayout, QLineEdit,
+                             QTableWidget, QTableWidgetItem,
+                             QHeaderView, QAbstractItemView)
+from PyQt5.QtCore import Qt, pyqtSignal
 
 class RicercaDestinatario(QDialog):
+    destinatario_selected = pyqtSignal(int)
     def __init__(self, destinatari):
         super().__init__()
         self.setWindowTitle("Finestra Destinatari")
@@ -35,10 +38,11 @@ class RicercaDestinatario(QDialog):
         self.table.setColumnCount(2)  # Numero di colonne
         self.table.setHorizontalHeaderLabels(["ID", "Ragione Sociale"])
         self.table.setColumnHidden(0, True)
+        self.table.setEditTriggers(QAbstractItemView.NoEditTriggers)
         header = self.table.horizontalHeader()
         header.setStretchLastSection(True)
         header.setSectionResizeMode(QHeaderView.Stretch)
-
+        self.table.cellDoubleClicked.connect(self.emit_selected_destinatario)
         self.populate_table()
 
 
@@ -59,3 +63,12 @@ class RicercaDestinatario(QDialog):
         for row in range(self.table.rowCount()):
             ragione_sociale = self.table.item(row, 1).text().lower()
             self.table.setRowHidden(row, filter_text not in ragione_sociale)
+
+    def emit_selected_destinatario(self, row, column):
+        try:
+            destinatario_id = int(self.table.item(row, 0).text())  # Ottieni l'ID dalla prima colonna
+            print(f"Destinatario ID: {destinatario_id}")
+            self.destinatario_selected.emit(destinatario_id)  # Emetti il segnale con l'ID del destinatario selezionato
+            self.accept()  # Chiudi la finestra di dialogo
+        except Exception as e:
+            print(f"Errore durante l'emissione del segnale: {e}")

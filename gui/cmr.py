@@ -3,6 +3,7 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import Qt
 from utils import center
+from custom_buttons import SearchButton
 from gui.ricercaDestinatario import RicercaDestinatario
 from db.models import SessionLocal, Destinatario
 
@@ -21,6 +22,10 @@ class AddCmr(QMainWindow):
         self.session = SessionLocal()
 
         self.UI()
+
+        if self.editDestinatarioId.text():
+            destinatario_id = int(self.editDestinatarioId.text())
+            self.load_destinatario_details(destinatario_id)
 
         #self.show()
 
@@ -67,14 +72,34 @@ class AddCmr(QMainWindow):
         self.editUtenteId = QLineEdit()
 
         self.lblDestinatarioId = QLabel("ID:")
+        self.lblDestinatarioId.setMaximumWidth(50)
+        self.lblDestinatarioId.setAlignment(Qt.AlignLeft)
+
         self.editDestinatarioId = QLineEdit()
+        self.editDestinatarioId.setReadOnly(True)  # Imposta il QLineEdit come non modificabile
+        self.editDestinatarioId.setStyleSheet("background-color: lightgray;")  # Cambia lo stile per indicare non modificabile
+        self.editDestinatarioId.setMaximumWidth(50)  # Imposta la larghezza massima
+        self.editDestinatarioId.setAlignment(Qt.AlignLeft)
+        self.lblRagioneSociale = QLabel("Ragione Sociale:")
+        self.editRagioneSociale = QLineEdit()
+        self.editRagioneSociale.setReadOnly(True)
+
+        self.lblIndirizzo1 = QLabel("Indirizzo 1:")
+        self.editIndirizzo1 = QLineEdit()
+        self.editIndirizzo1.setReadOnly(True)
+
+        self.lblIndirizzo2 = QLabel("Indirizzo 2:")
+        self.editIndirizzo2 = QLineEdit()
+        self.editIndirizzo2.setReadOnly(True)
+
 
         self.lblDestinazioneId = QLabel("ID:")
         self.editDestinazioneId = QLineEdit()
 
         self.btnUpdate = QPushButton("Update Data")
         self.btnSearchMittente = QPushButton("Search")
-        self.btnSearchDestinatario = QPushButton("Search")
+        self.btnSearchDestinatario = SearchButton()
+
         self.btnSearchDestinazione = QPushButton("Search")
 
         self.groupLuogoDataPresa = QGroupBox("Luogo e data presa in carico")
@@ -153,7 +178,8 @@ class AddCmr(QMainWindow):
         # preparo i layout per il top layout
         self.layoutUtente = QHBoxLayout()
         self.layoutDestinatario = QHBoxLayout()
-        self.layoutDestinazione = QHBoxLayout()
+        self.layoutDestinatarioDetails = QVBoxLayout()
+        self.layoutDestinazione = QVBoxLayout()
         self.layoutLuogoDataPresa = QVBoxLayout()
         self.layoutDocumenti = QHBoxLayout()
         self.layoutIstruzioniMittente = QHBoxLayout()
@@ -169,7 +195,20 @@ class AddCmr(QMainWindow):
         self.layoutDestinatario.addWidget(self.lblDestinatarioId)
         self.layoutDestinatario.addWidget(self.btnSearchDestinatario)
         self.layoutDestinatario.addWidget(self.editDestinatarioId)
-        self.groupDestinatario.setLayout(self.layoutDestinatario)
+        #self.groupDestinatario.setLayout(self.layoutDestinatario)
+
+        self.layoutDestinatarioDetails.addWidget(self.lblRagioneSociale)
+        self.layoutDestinatarioDetails.addWidget(self.editRagioneSociale)
+        self.layoutDestinatarioDetails.addWidget(self.lblIndirizzo1)
+        self.layoutDestinatarioDetails.addWidget(self.editIndirizzo1)
+        self.layoutDestinatarioDetails.addWidget(self.lblIndirizzo2)
+        self.layoutDestinatarioDetails.addWidget(self.editIndirizzo2)
+        #self.groupDestinatario.setLayout(self.layoutDestinatarioDetails)
+
+        self.layoutDestinatarioInner = QVBoxLayout()
+        self.layoutDestinatarioInner.addLayout(self.layoutDestinatario)
+        self.layoutDestinatarioInner.addLayout(self.layoutDestinatarioDetails)
+        self.groupDestinatario.setLayout(self.layoutDestinatarioInner)
 
         self.layoutDestinazione.addWidget(self.lblDestinazioneId)
         self.layoutDestinazione.addWidget(self.btnSearchDestinazione)
@@ -271,6 +310,7 @@ class AddCmr(QMainWindow):
         print(f"Destrinatari: {destinatari}")
 
         dialog = RicercaDestinatario(destinatari)
+        dialog.destinatario_selected.connect(self.set_destinatario_id)
         dialog.exec_()
 
     def update_destinazione_data(self):
@@ -280,4 +320,15 @@ class AddCmr(QMainWindow):
     def update_data_from_id(self):
         # Implement logic to update data based on the entered IDs
         pass
+
+    def set_destinatario_id(self, destinatario_id):
+        self.editDestinatarioId.setText(str(destinatario_id))
+        self.load_destinatario_details(destinatario_id)
+
+    def load_destinatario_details(self, destinatario_id):
+        destinatario = self.session.query(Destinatario).filter(Destinatario.id == destinatario_id).first()
+        if destinatario:
+            self.editRagioneSociale.setText(destinatario.ragione_sociale)
+            self.editIndirizzo1.setText(destinatario.indirizzo_1)
+            self.editIndirizzo2.setText(destinatario.indirizzo_2)
 

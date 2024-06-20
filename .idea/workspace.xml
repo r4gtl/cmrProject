@@ -4,14 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d0ac0911-2230-4513-aefb-8fbfb182cc51" name="Changes" comment="CMR Table">
-      <change afterPath="$PROJECT_DIR$/drivers/hsqldb.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/slf4j-api-1.7.36.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/sqlite-jdbc-3.46.0.0.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gui/ricercaDestinatario.py" afterDir="false" />
+    <list default="true" id="d0ac0911-2230-4513-aefb-8fbfb182cc51" name="Changes" comment="Ricerca Destinatari">
+      <change afterPath="$PROJECT_DIR$/custom_buttons.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/db/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gui/cmr.py" beforeDir="false" afterPath="$PROJECT_DIR$/gui/cmr.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gui/ricercaDestinatario.py" beforeDir="false" afterPath="$PROJECT_DIR$/gui/ricercaDestinatario.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -113,7 +110,15 @@
       <option name="project" value="LOCAL" />
       <updated>1718291897759</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Ricerca Destinatari">
+      <option name="closed" value="true" />
+      <created>1718804002094</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1718804002094</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -121,7 +126,8 @@
     <MESSAGE value="Added new windows" />
     <MESSAGE value="All CRUD operations" />
     <MESSAGE value="CMR Table" />
-    <option name="LAST_COMMIT_MESSAGE" value="CMR Table" />
+    <MESSAGE value="Ricerca Destinatari" />
+    <option name="LAST_COMMIT_MESSAGE" value="Ricerca Destinatari" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
