@@ -4,11 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d0ac0911-2230-4513-aefb-8fbfb182cc51" name="Changes" comment="Ricerca Destinatari">
-      <change afterPath="$PROJECT_DIR$/gui/dialogs/search_dialog_base.py" afterDir="false" />
+    <list default="true" id="d0ac0911-2230-4513-aefb-8fbfb182cc51" name="Changes" comment="Nuova Search Dialog">
+      <change afterPath="$PROJECT_DIR$/gui/cmr_save.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/custom_buttons.py" beforeDir="false" afterPath="$PROJECT_DIR$/custom_buttons.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/db/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gui/cmr.py" beforeDir="false" afterPath="$PROJECT_DIR$/gui/cmr.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gui/ricercaDestinatario.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gui/main_window.py" beforeDir="false" afterPath="$PROJECT_DIR$/gui/main_window.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -126,7 +128,15 @@
       <option name="project" value="LOCAL" />
       <updated>1718877236265</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Nuova Search Dialog">
+      <option name="closed" value="true" />
+      <created>1719223285388</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1719223285388</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -135,7 +145,8 @@
     <MESSAGE value="All CRUD operations" />
     <MESSAGE value="CMR Table" />
     <MESSAGE value="Ricerca Destinatari" />
-    <option name="LAST_COMMIT_MESSAGE" value="Ricerca Destinatari" />
+    <MESSAGE value="Nuova Search Dialog" />
+    <option name="LAST_COMMIT_MESSAGE" value="Nuova Search Dialog" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

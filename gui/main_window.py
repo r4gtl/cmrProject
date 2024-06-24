@@ -2,7 +2,8 @@ import sys
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import Qt
-from gui.cmr import AddCmr
+
+#from gui.cmr_save import AddCmr
 from gui.cmr import AddCmr
 from gui.destinatari import ViewDestinatari
 from gui.destinazioni import ViewDestinazioni

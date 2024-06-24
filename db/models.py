@@ -73,7 +73,18 @@ class Cmr(Base):
     def __str__(self):
         return (f'Cmr n. {self.id} del {self.data_presa_in_carico}')
 
+        # Metodo per salvare i dati del CMR
 
+    def save_cmr_data(self):
+        try:
+            # Aggiungi il nuovo CMR alla sessione
+            session.add(self)
+            session.commit()  # Commit delle modifiche al database
+            return True
+        except Exception as e:
+            print(f"Errore durante il salvataggio del CMR: {e}")
+            session.rollback()  # Rollback delle modifiche in caso di errore
+            return False
 
 class DettaglioCmr(Base):
     __tablename__ = "dettaglio_cmr"
@@ -95,5 +106,7 @@ engine = create_engine(DATABASE_URL)
 
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+session = SessionLocal()
+
 
 
