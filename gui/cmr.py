@@ -374,7 +374,7 @@ class AddCmr(QMainWindow):
                 self.editIndirizzo2Trasportatore.setText(trasportatore.indirizzo2)
 
     def addSave(self):
-        print("Arrivato qui! Salvataggio!")
+
         if self.validateCmrData():
             cmr_data = {
                 'utente_id': int(self.editUtenteId.text()),
@@ -395,9 +395,11 @@ class AddCmr(QMainWindow):
             }
             new_cmr = Cmr(**cmr_data)
             if new_cmr.save_cmr_data():
+                print("Arrivato qui! Salvataggio corretto!")
                 QMessageBox.information(self, "Salva", "Dati CMR salvati con successo!")
                 self.close()
             else:
+                print("Arrivato qui! Salvataggio sbagliato!")
                 QMessageBox.warning(self, "Errore", "Errore durante il salvataggio dei dati del CMR.")
 
     def validateCmrData(self):
