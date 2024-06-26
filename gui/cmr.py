@@ -1,6 +1,6 @@
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QDate
 from custom_buttons import SearchButton, setup_toolbar
 from db.models import SessionLocal, Destinatario, Destinazione, Trasportatore, Utente, Cmr
 from gui.dialogs.search_dialog_base import SearchDialog
@@ -13,8 +13,8 @@ class AddCmr(QMainWindow):
         super().__init__()
         self.setWindowTitle("CMR Manager")
         self.setWindowIcon(QIcon('icons/icon.ico'))
-        self.setGeometry(450, 150, 1000, 750)
-        self.setFixedSize(self.size())
+        self.setGeometry(450, 150, 1500, 750)
+        #self.setFixedSize(self.size())
         center(self)
         self.session = SessionLocal()
         self.cmr_id = cmr_id
@@ -125,7 +125,7 @@ class AddCmr(QMainWindow):
         self.lblLuogoPresa = QLabel("Luogo")
         self.editLuogoPresa = QLineEdit()
         self.lblDataPresa = QLabel("Data")
-        self.editDataPresa = QLineEdit()
+        self.editDataPresa = QDateEdit()
 
         # Documenti Allegati
         self.lblDocumenti = QLabel("Documenti Allegati")
@@ -167,7 +167,7 @@ class AddCmr(QMainWindow):
         self.lblLuogoCompilazione = QLabel("Luogo Compilazione")
         self.editLuogoCompilazione = QLineEdit()
         self.lblDataCompilazione = QLabel("Data Compilazione")
-        self.editDataCompilazione = QLineEdit()
+        self.editDataCompilazione = QDateEdit()
 
     def createLayouts(self):
         self.mainLayout = QVBoxLayout(self.centralWidget())
@@ -188,6 +188,11 @@ class AddCmr(QMainWindow):
         self.createDestinatarioLayout()
         self.createDestinazioneLayout()
         self.createTrasportatoreLayout()
+        self.createLuogoDataPresaLayout()
+        self.createDocumentiLayout()
+        self.createIstruzioniMittenteLayout()
+        self.createIstruzioniPagamentoLayout()
+        self.createRimborsoLayout()
 
 
 
@@ -195,6 +200,12 @@ class AddCmr(QMainWindow):
         self.topLayout.addWidget(self.groupDestinatario, 0, 1)
         self.topLayout.addWidget(self.groupDestinazione, 0, 2)
         self.topLayout.addWidget(self.groupTrasportatore, 0, 3, 1, 2)
+        self.topLayout.addWidget(self.groupLuogoDataPresa, 1, 0)
+        self.topLayout.addWidget(self.groupDocumenti, 1, 1)
+        self.topLayout.addWidget(self.groupIstruzioniMittente, 1, 2)
+        self.topLayout.addWidget(self.groupIstruzioniPagamento, 1, 3)
+        self.topLayout.addWidget(self.groupRimborso, 1, 4)
+
 
     def createMittenteLayout(self):
         self.mittenteLayout = QVBoxLayout(self.groupUtente)
@@ -236,6 +247,40 @@ class AddCmr(QMainWindow):
         self.trasportatoreFormLayout.addRow(self.lblIndirizzo2Trasportatore, self.editIndirizzo2Trasportatore)
         self.trasportatoreLayout.addLayout(self.trasportatoreFormLayout)
         self.btnSearchTrasportatore.clicked.connect(self.update_trasportatore_data)
+
+    def createLuogoDataPresaLayout(self):
+        self.luogoDataPresaLayout = QVBoxLayout(self.groupLuogoDataPresa)
+        self.luogoDataPresaFormLayout = QFormLayout()
+        self.luogoDataPresaFormLayout.addRow(self.lblLuogoPresa, self.editLuogoPresa)
+        self.luogoDataPresaFormLayout.addRow(self.lblDataPresa, self.editDataPresa)
+        self.luogoDataPresaLayout.addLayout(self.luogoDataPresaFormLayout)
+
+    def createDocumentiLayout(self):
+        self.documentiLayout =QVBoxLayout(self.groupDocumenti)
+        self.documentiFormLayout = QFormLayout()
+        self.documentiFormLayout.addRow(self.lblDocumenti, self.editDocumenti)
+        self.documentiLayout.addLayout(self.documentiFormLayout)
+
+    def createIstruzioniMittenteLayout(self):
+        self.istruzioniMittenteLayout = QVBoxLayout(self.groupIstruzioniMittente)
+        self.istruzioniMittenteFormLayout = QFormLayout()
+        self.istruzioniMittenteFormLayout.addRow(self.lblIstruzioniMittente, self.editIstruzioniMittente)
+        self.istruzioniMittenteLayout.addLayout(self.istruzioniMittenteFormLayout)
+
+    def createIstruzioniPagamentoLayout(self):
+        self.istruzioniPagamentoLayout = QVBoxLayout(self.groupIstruzioniPagamento)
+        self.istruzioniPagamentoFormLayout = QFormLayout()
+        self.istruzioniPagamentoFormLayout.addRow(self.lblIstruzioniPagamento, self.editIstruzioniPagamento)
+        self.istruzioniPagamentoLayout.addLayout(self.istruzioniPagamentoFormLayout)
+
+    def createRimborsoLayout(self):
+        self.rimborsoLayout = QVBoxLayout(self.groupRimborso)
+        self.rimborsoFormLayout = QFormLayout()
+        self.rimborsoFormLayout.addRow(self.lblRimborso, self.editRimborso)
+        self.rimborsoLayout.addLayout(self.rimborsoFormLayout)
+
+
+
 
     def createMiddleLayout(self):
         pass  # Già gestito con il QTableWidget
@@ -342,39 +387,71 @@ class AddCmr(QMainWindow):
 
     def loadCmrData(self):
         cmr = self.session.query(Cmr).filter(Cmr.id == self.cmr_id).first()
+        print("Errore LoadCmrData")
+        print(f"Cmr.id: {self.cmr_id}")
         if cmr:
+            print("CMR OK")
             # Mittente
-            self.editUtenteId.setText(str(cmr.mittente_id))
-            user = self.session.query(Utente).filter(Utente.id == cmr.mittente_id).first()
+            self.editUtenteId.setText(str(cmr.utente_id))
+            user = self.session.query(Utente).filter(Utente.id == cmr.utente_id).first()
+            print(f"User: {user}")
             if user:
                 self.editRagioneSocialeUtente.setText(user.nome)
-
+            print("User ok")
             # Destinatario
             self.editDestinatarioId.setText(str(cmr.destinatario_id))
-            destinatario = self.session.query(Destinatario).filter(Destinatario.id == cmr.destinatario_id).first()
-            if destinatario:
-                self.editRagioneSociale.setText(destinatario.ragione_sociale)
-                self.editIndirizzo1.setText(destinatario.indirizzo1)
-                self.editIndirizzo2.setText(destinatario.indirizzo2)
-
+            try:
+                destinatario = self.session.query(Destinatario).filter(Destinatario.id == cmr.destinatario_id).first()
+                print(f"Destinatario: {destinatario.ragione_sociale}")
+                if destinatario:
+                    self.editRagioneSociale.setText(destinatario.ragione_sociale)
+                    self.editIndirizzo1.setText(destinatario.indirizzo_1)
+                    self.editIndirizzo2.setText(destinatario.indirizzo_2)
+            except Exception as e:
+                print(f"Errore durante l'accesso a Destinatario: {e}")
+            print("Destinatario ok")
             # Destinazione
             self.editDestinazioneId.setText(str(cmr.destinazione_id))
             destinazione = self.session.query(Destinazione).filter(Destinazione.id == cmr.destinazione_id).first()
             if destinazione:
                 self.editRagioneSocialeDestinazione.setText(destinazione.ragione_sociale)
-                self.editIndirizzo1Destinazione.setText(destinazione.indirizzo1)
-                self.editIndirizzo2Destinazione.setText(destinazione.indirizzo2)
-
+                self.editIndirizzo1Destinazione.setText(destinazione.indirizzo_1)
+                self.editIndirizzo2Destinazione.setText(destinazione.indirizzo_2)
+            print("Destinazione ok")
             # Trasportatore
             self.editTrasportatoreId.setText(str(cmr.trasportatore_id))
             trasportatore = self.session.query(Trasportatore).filter(Trasportatore.id == cmr.trasportatore_id).first()
             if trasportatore:
                 self.editRagioneSocialeTrasportatore.setText(trasportatore.ragione_sociale)
-                self.editIndirizzo1Trasportatore.setText(trasportatore.indirizzo1)
-                self.editIndirizzo2Trasportatore.setText(trasportatore.indirizzo2)
+                self.editIndirizzo1Trasportatore.setText(trasportatore.indirizzo_1)
+                self.editIndirizzo2Trasportatore.setText(trasportatore.indirizzo_2)
+            print("Trasportatore ok")
+            self.editLuogoPresa.setText(cmr.luogo_presa_in_carico)
+            print(f"Luogo presa: {cmr.luogo_presa_in_carico}")
+            self.editDataPresa.setDate(cmr.data_presa_in_carico)
+            print(f"Data presa: {cmr.data_presa_in_carico}")
+            self.editDocumenti.setText(cmr.documenti_allegati)
+            print(f"Documenti: {cmr.documenti_allegati}")
+            self.editIstruzioniMittente.setText(cmr.istruzioni_mittente)
+            print(f"istruzioni_mittente: {cmr.istruzioni_mittente}")
+            #self.checkPortoFranco.setChecked(cmr.porto_franco)
+
+            #self.checkPortoAssegnato.setChecked(cmr.porto_assegnato)
+            self.editRimborso.setText(cmr.rimborso)
+            print(f"rimborso: {cmr.rimborso}")
+            self.editOsservazioni.setText(cmr.osservazioni_trasporto)
+            print(f"osservazioni_trasporto: {cmr.osservazioni_trasporto}")
+            self.editConvenzioni.setText(cmr.convenzioni)
+            print(f"convenzioni: {cmr.convenzioni}")
+            self.editLuogoCompilazione.setText(cmr.compilato_a)
+            print(f"compilato_a: {cmr.compilato_a}")
+            self.editDataCompilazione.setDate(cmr.data_compilazione)
+            print(f"data_compilazione: {cmr.data_compilazione}")
+
+
+
 
     def addSave(self):
-
         if self.validateCmrData():
             cmr_data = {
                 'utente_id': int(self.editUtenteId.text()),
@@ -395,44 +472,31 @@ class AddCmr(QMainWindow):
             }
             new_cmr = Cmr(**cmr_data)
             if new_cmr.save_cmr_data():
-                print("Arrivato qui! Salvataggio corretto!")
-                QMessageBox.information(self, "Salva", "Dati CMR salvati con successo!")
-                self.close()
+                QMessageBox.information(self, "Success", "CMR salvato con successo!")
             else:
-                print("Arrivato qui! Salvataggio sbagliato!")
-                QMessageBox.warning(self, "Errore", "Errore durante il salvataggio dei dati del CMR.")
+                QMessageBox.critical(self, "Error", "Errore durante il salvataggio del CMR.")
 
     def validateCmrData(self):
-        # Validazione dell'utente
-        utente_id = self.editUtenteId.text()
-        if not utente_id:
-            QMessageBox.warning(self, "Errore", "ID Utente non specificato.")
+        if not self.editUtenteId.text().isdigit():
+            QMessageBox.critical(self, "Error", "ID Utente non valido.")
             return False
-
-        # Validazione del destinatario
-        destinatario_id = self.editDestinatarioId.text()
-        if not destinatario_id:
-            QMessageBox.warning(self, "Errore", "ID Destinatario non specificato.")
+        if not self.editDestinatarioId.text().isdigit():
+            QMessageBox.critical(self, "Error", "ID Destinatario non valido.")
             return False
-
-        # Validazione della destinazione
-        destinazione_id = self.editDestinazioneId.text()
-        if not destinazione_id:
-            QMessageBox.warning(self, "Errore", "ID Destinazione non specificato.")
+        if not self.editDestinazioneId.text().isdigit():
+            QMessageBox.critical(self, "Error", "ID Destinazione non valido.")
             return False
-
-        # Validazione del luogo di presa in carico
-        # luogo_presa = self.editLuogoPresa.text()
-        # if not luogo_presa:
-        #     QMessageBox.warning(self, "Errore", "Luogo di presa in carico non specificato.")
-        #     return False
-        #
-        # # Validazione della data di presa in carico
-        # data_presa = self.editDataPresa.text()
-        # if not data_presa:
-        #     QMessageBox.warning(self, "Errore", "Data di presa in carico non specificata.")
-        #     return False
-
-        # Altri campi possono essere validati secondo necessità...
-
+        if not self.editTrasportatoreId.text().isdigit():
+            QMessageBox.critical(self, "Error", "ID Trasportatore non valido.")
+            return False
+        try:
+            datetime.strptime(self.editDataPresa.text(), '%d/%m/%Y')
+        except ValueError:
+            QMessageBox.critical(self, "Error", "Data Presa in Carico non valida. Usa il formato gg/mm/aaaa.")
+            return False
+        try:
+            datetime.strptime(self.editDataCompilazione.text(), '%d/%m/%Y')
+        except ValueError:
+            QMessageBox.critical(self, "Error", "Data Compilazione non valida. Usa il formato gg/mm/aaaa.")
+            return False
         return True

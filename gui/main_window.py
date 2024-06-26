@@ -9,7 +9,7 @@ from gui.destinatari import ViewDestinatari
 from gui.destinazioni import ViewDestinazioni
 from gui.trasportatori import ViewTrasportatori
 
-from db.models import SessionLocal, Cmr
+from db.models import SessionLocal, Cmr, Destinatario
 
 from utils import center
 
@@ -105,10 +105,10 @@ class MainWindow(QMainWindow):
         item_id = self.cmrTable.item(row, 0)
         if item_id:
             cmr_id = int(item_id.text())
-            cmr = self.session.query(Cmr).filter_by(id=cmr_id).first()
-            if cmr:
-                self.add_cmr.load_data(cmr)
-                self.add_cmr.show()
+            # Assicurati di passare la finestra principale (self) alla finestra di dialogo AddCmr
+            self.add_cmr = AddCmr(cmr_id)
+            self.add_cmr.loadCmrData()
+            self.add_cmr.show()
 
 
     def load_data(self):
@@ -118,5 +118,23 @@ class MainWindow(QMainWindow):
             self.add_row(cmr)
         self.cmrTable.setEditTriggers(QAbstractItemView.NoEditTriggers)
 
+    def add_row(self, cmr):
+        row_position = self.cmrTable.rowCount()
+        self.cmrTable.insertRow(row_position)
 
+        self.cmrTable.setItem(row_position, 0, QTableWidgetItem(str(cmr.id)))
 
+        if cmr.destinatario_id:
+            destinatario = self.session.query(Destinatario).filter_by(id=cmr.destinatario_id).first()
+            if destinatario:
+                self.cmrTable.setItem(row_position, 1, QTableWidgetItem(destinatario.ragione_sociale))
+                self.cmrTable.setItem(row_position, 2, QTableWidgetItem(destinatario.indirizzo_1))
+                self.cmrTable.setItem(row_position, 3, QTableWidgetItem(destinatario.indirizzo_2))
+            else:
+                self.cmrTable.setItem(row_position, 1, QTableWidgetItem("N/A"))
+                self.cmrTable.setItem(row_position, 2, QTableWidgetItem("N/A"))
+                self.cmrTable.setItem(row_position, 3, QTableWidgetItem("N/A"))
+        else:
+            self.cmrTable.setItem(row_position, 1, QTableWidgetItem("N/A"))
+            self.cmrTable.setItem(row_position, 2, QTableWidgetItem("N/A"))
+            self.cmrTable.setItem(row_position, 3, QTableWidgetItem("N/A"))
