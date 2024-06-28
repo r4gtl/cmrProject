@@ -10,6 +10,13 @@ class SearchButton(QPushButton):
         self.setIconSize(self.sizeHint())  # Imposta la dimensione dell'icona in base al sizeHint del pulsante
         self.setFixedSize(40, 40)  # Imposta la dimensione fissa del pulsante (esempio: 40x40)
 
+class AddButton(QPushButton):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.setIcon(QIcon('icons/add-list.png'))  # Imposta l'icona del pulsante
+        self.setIconSize(self.sizeHint())  # Imposta la dimensione dell'icona in base al sizeHint del pulsante
+        self.setFixedSize(40, 40)  # Imposta la dimensione fissa del pulsante (esempio: 40x40)
+
 
 def setup_toolbar(parent):
     tb = QToolBar("Tool Bar", parent)

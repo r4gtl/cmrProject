@@ -1,7 +1,7 @@
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import Qt, QDate
-from custom_buttons import SearchButton, setup_toolbar
+from custom_buttons import SearchButton, setup_toolbar, AddButton
 from db.models import SessionLocal, Destinatario, Destinazione, Trasportatore, Utente, Cmr
 from gui.dialogs.search_dialog_base import SearchDialog
 from utils import center
@@ -158,6 +158,7 @@ class AddCmr(QMainWindow):
         header = self.table.horizontalHeader()
         header.setStretchLastSection(True)
         header.setSectionResizeMode(QHeaderView.Stretch)
+        self.btnAddDetail = AddButton()
 
     def createBottomWidgets(self):
         self.lblOsservazioni = QLabel("Osservazioni")
@@ -178,7 +179,8 @@ class AddCmr(QMainWindow):
 
 
         self.mainLayout.addLayout(self.topLayout)
-        self.mainLayout.addWidget(self.table)
+        self.mainLayout.addLayout(self.middleLayout)
+        #self.mainLayout.addWidget(self.table)
         self.mainLayout.addLayout(self.bottomLayout)
 
     def createTopLayout(self):
@@ -283,7 +285,16 @@ class AddCmr(QMainWindow):
 
 
     def createMiddleLayout(self):
-        pass  # Già gestito con il QTableWidget
+
+        self.middleLayout = QHBoxLayout()
+        self.tableLayout = QHBoxLayout()
+        self.btnLayout = QVBoxLayout()
+
+        self.tableLayout.addWidget(self.table)
+        self.btnLayout.addWidget(self.btnAddDetail, alignment=Qt.AlignTop)
+        self.middleLayout.addLayout(self.tableLayout)
+        self.middleLayout.addLayout(self.btnLayout)
+
 
     def createBottomLayout(self):
         self.bottomLayout = QVBoxLayout()

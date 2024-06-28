@@ -4,10 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d0ac0911-2230-4513-aefb-8fbfb182cc51" name="Changes" comment="Saving CMR">
+    <list default="true" id="d0ac0911-2230-4513-aefb-8fbfb182cc51" name="Changes" comment="Get CMR">
+      <change afterPath="$PROJECT_DIR$/gui/add_cmr_details.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/icons/add-list.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/custom_buttons.py" beforeDir="false" afterPath="$PROJECT_DIR$/custom_buttons.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/db/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gui/cmr.py" beforeDir="false" afterPath="$PROJECT_DIR$/gui/cmr.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gui/main_window.py" beforeDir="false" afterPath="$PROJECT_DIR$/gui/main_window.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,24 +36,24 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Python.cmr.executor&quot;: &quot;Run&quot;,
-    &quot;Python.main.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/stefano.LVZZ/PycharmProjects/cmrProject/drivers&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Python.cmr.executor": "Run",
+    "Python.main.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "master",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "C:/Users/stefano.LVZZ/PycharmProjects/cmrProject/icons",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\stefano.LVZZ\PycharmProjects\cmrProject\icons" />
       <recent name="C:\Users\stefano.LVZZ\PycharmProjects\cmrProject\drivers" />
       <recent name="C:\Users\stefano.LVZZ\PycharmProjects\cmrProject\gui" />
       <recent name="C:\Users\stefano.LVZZ\PycharmProjects\cmrProject\alembic" />
       <recent name="C:\Users\stefano.LVZZ\PycharmProjects\cmrProject\alembic\versions" />
-      <recent name="C:\Users\stefano.LVZZ\PycharmProjects\cmrProject\db" />
     </key>
   </component>
   <component name="SharedIndexes">
@@ -149,7 +152,15 @@
       <option name="project" value="LOCAL" />
       <updated>1719242652894</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Get CMR">
+      <option name="closed" value="true" />
+      <created>1719415624458</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1719415624458</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -160,7 +171,8 @@
     <MESSAGE value="Ricerca Destinatari" />
     <MESSAGE value="Nuova Search Dialog" />
     <MESSAGE value="Saving CMR" />
-    <option name="LAST_COMMIT_MESSAGE" value="Saving CMR" />
+    <MESSAGE value="Get CMR" />
+    <option name="LAST_COMMIT_MESSAGE" value="Get CMR" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

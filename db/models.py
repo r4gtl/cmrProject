@@ -98,6 +98,16 @@ class DettaglioCmr(Base):
     peso_lordo_kg = Column(Integer)
     volume_mc = Column(Integer)
 
+    def save_dettaglio_cmr_data(self):
+        try:
+            session.add(self)
+            session.commit()  # Commit delle modifiche al database
+            return True
+        except Exception as e:
+            print(f"Errore durante il salvataggio del Dettaglio Cmr: {e}")
+            session.rollback()  # Rollback delle modifiche in caso di errore
+            return False
+
 
 
 DATABASE_URL = "sqlite:///app.db"
