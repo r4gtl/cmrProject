@@ -10,13 +10,14 @@ from db.models import SessionLocal, Destinatario, DettaglioCmr, Cmr
 class CrudDettaglioCmr(QMainWindow):
     aboutToClose = pyqtSignal()  # Segnale personalizzato
 
-    def __init__(self):
+    def __init__(self, cmr_id=None):
         super().__init__()
         self.setWindowTitle("Aggiungi riga dettaglio")
         self.setWindowIcon(QIcon('icons/icon.ico'))
-        self.setGeometry(300,150,500,300)
+        self.setGeometry(600,150,500,300)
         self.setFixedSize(self.size())
         self.session = SessionLocal()
+        self.cmr_id = cmr_id
         center(self)
         self.central_widget = QWidget()  # Creazione del widget centrale
         self.setCentralWidget(self.central_widget)  # Impostazione del widget centrale
@@ -29,7 +30,8 @@ class CrudDettaglioCmr(QMainWindow):
         self.widgets()
         self.layouts()
         self.toolBar()
-        set_focus_to_widget(self.editRagioneSociale)
+        self.loadCmrId()
+        #set_focus_to_widget(self.editRagioneSociale)
 
     def toolBar(self):
         self.tb = self.addToolBar("Tool Bar")
@@ -45,7 +47,7 @@ class CrudDettaglioCmr(QMainWindow):
         self.tb.addSeparator()
         self.delete = QAction(QIcon('icons/delete-folder.png'), "Elimina", self)
         self.tb.addAction(self.delete)
-        self.delete.triggered.connect(self.delete_dettaglio)
+        #self.delete.triggered.connect(self.delete_dettaglio)
         self.tb.addSeparator()
         self.exit = QAction(QIcon('icons/exit.png'), "Esci", self)
         self.exit.triggered.connect(self.close)
@@ -60,7 +62,7 @@ class CrudDettaglioCmr(QMainWindow):
 
         #self.lblRagioneSociale = QLabel("Ragione Sociale:")
         self.edit_cmr_id = QLineEdit()
-        self.edit_cmr_id.hide()
+        self.edit_cmr_id.setReadOnly(True)
 
         self.lblUMisura = QLabel("Unità di Misura:")
         self.editUMisura = QLineEdit()
@@ -85,10 +87,12 @@ class CrudDettaglioCmr(QMainWindow):
 
 
     def layouts(self):
-        self.mainLayout = QVBoxLayout(self.central_widget)
+        self.groupForm = QGroupBox("Dati Dettaglio")
+        self.mainLayout = QHBoxLayout(self.central_widget)
+        # self.mainLayout = QVBoxLayout(self.groupForm)
 
         self.formLayout = QFormLayout()
-        self.formLayout.addRow(self.lblId, self.editId, self.edit_cmr_id)
+        self.formLayout.addRow(self.lblId, self.editId)
         self.formLayout.addRow(self.lblUMisura, self.editUMisura)
         self.formLayout.addRow(self.lblNColli, self.editNColli)
         self.formLayout.addRow(self.lblImballaggio, self.editImballaggio)
@@ -96,53 +100,43 @@ class CrudDettaglioCmr(QMainWindow):
         self.formLayout.addRow(self.lblStatistica, self.editStatistica)
         self.formLayout.addRow(self.lblPesoLordo, self.editPesoLordo)
         self.formLayout.addRow(self.lblVolume, self.editVolume)
-
-        self.mainLayout.addLayout(self.formLayout)
+        self.formLayout.addRow(self.edit_cmr_id)
+        self.groupForm.setLayout(self.formLayout)
+        self.mainLayout.addWidget(self.groupForm)
+        # self.setLayout(self.mainLayout)
 
     def save_dettaglio(self):
-        # Salvataggio o aggiornamento del destinatario
-        id = self.editId.text()
-        ragione_sociale = self.editRagioneSociale.text()
-        indirizzo_1 = self.editIndirizzo1.text()
-        indirizzo_2 = self.editIndirizzo2.text()
+        if self.validateCmrDettaglio():
+            cmr_dettaglio_data = {
+                'id': int(self.editId.text()),
+                'cmr_id': int(self.edit_cmr_id.text()),
+                'u_misura': self.editUMisura.text(),
+                'n_colli': self.editNColli.text(),
+                'imballaggio': self.editImballaggio.text(),
+                'denominazione': self.editDenominazione.text(),
+                'statistica': self.editStatistica.text(),
+                'peso_lordo_kg': int(self.editStatistica.text()),
+                'volume_mc': self.editVolume.text(),
+            } # Salvataggio o aggiornamento del destinatario
+            new_detail = DettaglioCmr(**cmr_dettaglio_data)
+            if new_detail.save_dettaglio_cmr_data():
+                self.editId.setText(str(new_detail.id))
+                QMessageBox.information(self, "Success", "CMR salvato con successo!")
+            else:
+                QMessageBox.critical(self, "Error", "Errore durante il salvataggio del CMR.")
 
-
-
-        # Se l'ID è vuoto, creiamo un nuovo destinatario
-        if not id:
-            new_destinatario = Destinatario(ragione_sociale=ragione_sociale, indirizzo_1=indirizzo_1,
-                                            indirizzo_2=indirizzo_2,)
-                                            #created_at=datetime.date.today())
-            self.session.add(new_destinatario)
-            self.session.commit()
-            self.editId.setText(str(new_destinatario.id))  # Mostra l'ID appena creato
-            QMessageBox.information(self, "Info", "Destinatario aggiunto correttamente!")
-
-        else:
-            # Altrimenti, aggiorniamo il destinatario esistente
-            destinatario = self.session.query(Destinatario).filter_by(id=id).first()
-            if destinatario:
-                destinatario.ragione_sociale = ragione_sociale
-                destinatario.indirizzo_1 = indirizzo_1
-                destinatario.indirizzo_2 = indirizzo_2
-                self.session.commit()
-                QMessageBox.information(self, "Info", "Destinatario modificato correttamente!")
-
-        self.session.close()
-        self.close()
-
-    def delete_destinatario(self):
+    def delete_dettaglio(self):
         id = self.editId.text()
         if id:
             # Mostra un messaggio di conferma
             reply = QMessageBox.question(self, 'Conferma di cancellazione',
-                                         'Sei sicuro di voler eliminare questo destinatario?',
+                                         'Sei sicuro di voler eliminare questo dettaglio?',
                                          QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
             if reply == QMessageBox.Yes:
                 # Trova il destinatario da eliminare
-                destinatario = self.session.query(Destinatario).filter_by(id=id).first()
-                if destinatario:
-                    self.session.delete(destinatario)
+                dettaglio = self.session.query(DettaglioCmr).filter_by(id=id).first()
+                if dettaglio:
+                    self.session.delete(dettaglio)
                     self.session.commit()
                     self.clear_fields()
             self.session.close()
@@ -150,18 +144,49 @@ class CrudDettaglioCmr(QMainWindow):
 
     def clear_fields(self):
         self.editId.clear()
-        self.editRagioneSociale.clear()
-        self.editIndirizzo1.clear()
-        self.editIndirizzo2.clear()
+        self.edit_cmr_id.clear()
+        self.editUMisura.clear()
+        self.editNColli.clear()
+        self.editImballaggio.clear()
+        self.editDenominazione.clear()
+        self.editStatistica.clear()
+        self.editStatistica.clear()
+        self.editVolume.clear()
 
     def load_data(self, destinatario):
-        self.editId.setText(str(destinatario.id))
-        self.editRagioneSociale.setText(destinatario.ragione_sociale)
-        self.editIndirizzo1.setText(destinatario.indirizzo_1)
-        self.editIndirizzo2.setText(destinatario.indirizzo_2)
+        # self.editId.setText(str(destinatario.id))
+        # self.editRagioneSociale.setText(destinatario.ragione_sociale)
+        # self.editIndirizzo1.setText(destinatario.indirizzo_1)
+        # self.editIndirizzo2.setText(destinatario.indirizzo_2)
+        pass
 
     def closeEvent(self, event):
         self.aboutToClose.emit()  # Emette il segnale aboutToClose quando la finestra sta per chiudersi
         event.accept()
 
+    def validateCmrDettaglio(self):
+        if not self.editId.text().isdigit():
+            QMessageBox.critical(self, "Error", "ID dettaglio non valido.")
+            return False
+        if not self.edit_cmr_id.text().isdigit():
+            QMessageBox.critical(self, "Error", "ID CMR non valido.")
+            return False
+        if not self.editUMisura.text():
+            QMessageBox.critical(self, "Error", "Unità di misura non valido.")
+            return False
+        if not self.editNColli.text():
+            QMessageBox.critical(self, "Error", "Numero colli non valido.")
+            return False
+
+        return True
+
+    def loadCmrId(self):
+        if self.cmr_id:
+            self.edit_cmr_id.setText(str(self.cmr_id))
+            self.edit_cmr_id.setReadOnly(True)
+
+    def generate_new_detail_id(self):
+        # Query per trovare l'ID massimo attuale e incrementarlo di 1
+        max_id = self.session.query(func.max(DettaglioCmr.id)).scalar() or 0
+        return max_id + 1
 

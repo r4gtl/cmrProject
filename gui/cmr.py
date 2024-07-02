@@ -2,8 +2,9 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import Qt, QDate
 from custom_buttons import SearchButton, setup_toolbar, AddButton
-from db.models import SessionLocal, Destinatario, Destinazione, Trasportatore, Utente, Cmr
+from db.models import SessionLocal, Destinatario, Destinazione, Trasportatore, Utente, Cmr, DettaglioCmr
 from gui.dialogs.search_dialog_base import SearchDialog
+from gui.add_cmr_details import CrudDettaglioCmr
 from utils import center
 from datetime import datetime, date
 
@@ -15,6 +16,7 @@ class AddCmr(QMainWindow):
         self.setWindowIcon(QIcon('icons/icon.ico'))
         self.setGeometry(450, 150, 1500, 750)
         #self.setFixedSize(self.size())
+        self.add_details = CrudDettaglioCmr()
         center(self)
         self.session = SessionLocal()
         self.cmr_id = cmr_id
@@ -126,6 +128,9 @@ class AddCmr(QMainWindow):
         self.editLuogoPresa = QLineEdit()
         self.lblDataPresa = QLabel("Data")
         self.editDataPresa = QDateEdit()
+        self.editDataPresa.setDisplayFormat("dd/MM/yyyy")
+        self.editDataPresa.setCalendarPopup(True)  # Per mostrare il calendario a popup (opzionale)
+        self.editDataPresa.setDate(QDate.currentDate())
 
         # Documenti Allegati
         self.lblDocumenti = QLabel("Documenti Allegati")
@@ -159,6 +164,7 @@ class AddCmr(QMainWindow):
         header.setStretchLastSection(True)
         header.setSectionResizeMode(QHeaderView.Stretch)
         self.btnAddDetail = AddButton()
+        self.btnAddDetail.clicked.connect(self.addDetail)
 
     def createBottomWidgets(self):
         self.lblOsservazioni = QLabel("Osservazioni")
@@ -169,6 +175,9 @@ class AddCmr(QMainWindow):
         self.editLuogoCompilazione = QLineEdit()
         self.lblDataCompilazione = QLabel("Data Compilazione")
         self.editDataCompilazione = QDateEdit()
+        self.editDataCompilazione.setDisplayFormat("dd/MM/yyyy")
+        self.editDataCompilazione.setCalendarPopup(True)  # Per mostrare il calendario a popup (opzionale)
+        self.editDataCompilazione.setDate(QDate.currentDate())
 
     def createLayouts(self):
         self.mainLayout = QVBoxLayout(self.centralWidget())
@@ -322,14 +331,6 @@ class AddCmr(QMainWindow):
         # Implement logic to fetch and display Utente data based on ID
         pass
 
-    # def update_destinatario_data(self):
-
-    #   destinatari = self.session.query(Destinatario).all()
-    #   print(f"Destrinatari: {destinatari}")#
-
-    #   dialog = RicercaDestinatario(destinatari)
-    #   dialog.destinatario_selected.connect(self.set_destinatario_id)
-    #   dialog.exec_()
 
     def update_destinatario_data(self):
         destinatari = self.session.query(Destinatario).all()
@@ -511,3 +512,9 @@ class AddCmr(QMainWindow):
             QMessageBox.critical(self, "Error", "Data Compilazione non valida. Usa il formato gg/mm/aaaa.")
             return False
         return True
+
+    def addDetail(self):
+        self.add_details = CrudDettaglioCmr(self.cmr_id)
+        print(f'cmr_id: {self.cmr_id}')
+        self.add_details.show()
+
