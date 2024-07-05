@@ -104,9 +104,6 @@ class DettaglioCmr(Base):
 
     def save_dettaglio_cmr_data(self):
         try:
-            if not self.id:
-                self.id = self.generate_new_detail_id()
-
             session.add(self)
             session.commit()  # Commit delle modifiche al database
             return True
@@ -115,10 +112,7 @@ class DettaglioCmr(Base):
             session.rollback()  # Rollback delle modifiche in caso di errore
             return False
 
-    def generate_new_detail_id(self):
-        # Query per trovare l'ID massimo attuale e incrementarlo di 1
-        max_id = session.query(func.max(DettaglioCmr.id)).scalar() or 0
-        return max_id + 1
+
 
 
 DATABASE_URL = "sqlite:///app.db"

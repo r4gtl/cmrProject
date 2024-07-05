@@ -4,6 +4,8 @@ from PyQt5.QtCore import Qt, pyqtSignal
 from utils import center, set_focus_to_widget
 from sqlalchemy.exc import IntegrityError
 from db.models import SessionLocal, Destinatario, DettaglioCmr, Cmr
+from sqlalchemy import func
+
 
 
 
@@ -106,24 +108,61 @@ class CrudDettaglioCmr(QMainWindow):
         # self.setLayout(self.mainLayout)
 
     def save_dettaglio(self):
-        if self.validateCmrDettaglio():
-            cmr_dettaglio_data = {
-                'id': int(self.editId.text()),
-                'cmr_id': int(self.edit_cmr_id.text()),
-                'u_misura': self.editUMisura.text(),
-                'n_colli': self.editNColli.text(),
-                'imballaggio': self.editImballaggio.text(),
-                'denominazione': self.editDenominazione.text(),
-                'statistica': self.editStatistica.text(),
-                'peso_lordo_kg': int(self.editStatistica.text()),
-                'volume_mc': self.editVolume.text(),
-            } # Salvataggio o aggiornamento del destinatario
-            new_detail = DettaglioCmr(**cmr_dettaglio_data)
-            if new_detail.save_dettaglio_cmr_data():
-                self.editId.setText(str(new_detail.id))
-                QMessageBox.information(self, "Success", "CMR salvato con successo!")
-            else:
-                QMessageBox.critical(self, "Error", "Errore durante il salvataggio del CMR.")
+        try:
+            if self.validateCmrDettaglio():
+                print("Arrivato a save_dettaglio")
+
+                # Verifica e converte i campi in modo sicuro
+                id_text = self.editId.text()
+                cmr_id_text = self.edit_cmr_id.text()
+                n_colli_text = self.editNColli.text()
+                peso_lordo_text = self.editPesoLordo.text()
+                volume_text = self.editVolume.text()
+
+                if id_text.isdigit():
+                    dettaglio_id = int(id_text)
+                else:
+                    dettaglio_id = None
+
+                cmr_id = int(cmr_id_text)
+                if n_colli_text:
+                    n_colli = int(n_colli_text)
+                else:
+                    n_colli = 0
+                if peso_lordo_text:
+                    peso_lordo = int(peso_lordo_text)
+                else:
+                    peso_lordo = 0
+
+                if volume_text:
+                    volume_mc = int(volume_text)
+                else:
+                    volume_mc = 0
+
+                cmr_dettaglio_data = {
+                    'id': dettaglio_id,
+                    'cmr_id': cmr_id,
+                    'u_misura': self.editUMisura.text(),
+                    'n_colli': n_colli,
+                    'imballaggio': self.editImballaggio.text(),
+                    'denominazione': self.editDenominazione.text(),
+                    'statistica': self.editStatistica.text(),
+                    'peso_lordo_kg': peso_lordo,
+                    'volume_mc': volume_mc,
+                }
+
+                print(f"cmr_dettaglio_data: {cmr_dettaglio_data}")
+
+                new_detail = DettaglioCmr(**cmr_dettaglio_data)
+                print(f"New detail: {new_detail}")
+
+                if new_detail.save_dettaglio_cmr_data():
+                    QMessageBox.information(self, "Success", "CMR salvato con successo!")
+                else:
+                    QMessageBox.critical(self, "Error", "Errore durante il salvataggio del CMR.")
+        except Exception as e:
+            print(f"Errore: {e}")
+            QMessageBox.critical(self, "Error", f"Errore durante il salvataggio: {e}")
 
     def delete_dettaglio(self):
         id = self.editId.text()
@@ -150,7 +189,7 @@ class CrudDettaglioCmr(QMainWindow):
         self.editImballaggio.clear()
         self.editDenominazione.clear()
         self.editStatistica.clear()
-        self.editStatistica.clear()
+        self.editPesoLordo.clear()
         self.editVolume.clear()
 
     def load_data(self, destinatario):
@@ -166,15 +205,19 @@ class CrudDettaglioCmr(QMainWindow):
 
     def validateCmrDettaglio(self):
         if not self.editId.text().isdigit():
+            print("Problema id")
             QMessageBox.critical(self, "Error", "ID dettaglio non valido.")
             return False
         if not self.edit_cmr_id.text().isdigit():
+            print("Problema cmr id")
             QMessageBox.critical(self, "Error", "ID CMR non valido.")
             return False
         if not self.editUMisura.text():
+            print("Problema u misura")
             QMessageBox.critical(self, "Error", "Unità di misura non valido.")
             return False
         if not self.editNColli.text():
+            print("Problema ncolli")
             QMessageBox.critical(self, "Error", "Numero colli non valido.")
             return False
 
@@ -184,9 +227,7 @@ class CrudDettaglioCmr(QMainWindow):
         if self.cmr_id:
             self.edit_cmr_id.setText(str(self.cmr_id))
             self.edit_cmr_id.setReadOnly(True)
-
-    def generate_new_detail_id(self):
-        # Query per trovare l'ID massimo attuale e incrementarlo di 1
-        max_id = self.session.query(func.max(DettaglioCmr.id)).scalar() or 0
-        return max_id + 1
+            max_id = self.session.query(func.max(DettaglioCmr.id)).scalar() or 0
+            print(f"max_id: {max_id+1}")
+            self.editId.setText(str(max_id+1))
 

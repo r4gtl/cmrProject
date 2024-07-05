@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d0ac0911-2230-4513-aefb-8fbfb182cc51" name="Changes" comment="Modifiche ai modelli per il dettaglio Cmr" />
+    <list default="true" id="d0ac0911-2230-4513-aefb-8fbfb182cc51" name="Changes" comment="Modifiche ai modelli per il dettaglio Cmr">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/db/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gui/add_cmr_details.py" beforeDir="false" afterPath="$PROJECT_DIR$/gui/add_cmr_details.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
