@@ -47,10 +47,14 @@ class CrudDettaglioCmr(QMainWindow):
         self.tb.addAction(self.addSave)
         self.addSave.triggered.connect(self.save_dettaglio)
         self.tb.addSeparator()
+
+
+
         self.delete = QAction(QIcon('icons/delete-folder.png'), "Elimina", self)
         self.tb.addAction(self.delete)
         #self.delete.triggered.connect(self.delete_dettaglio)
         self.tb.addSeparator()
+
         self.exit = QAction(QIcon('icons/exit.png'), "Esci", self)
         self.exit.triggered.connect(self.close)
         self.tb.addAction(self.exit)
@@ -180,6 +184,9 @@ class CrudDettaglioCmr(QMainWindow):
                     self.clear_fields()
             self.session.close()
             self.close()
+
+
+
 
     def clear_fields(self):
         self.editId.clear()

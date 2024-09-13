@@ -7,6 +7,10 @@ from gui.dialogs.search_dialog_base import SearchDialog
 from gui.add_cmr_details import CrudDettaglioCmr
 from utils import center
 from datetime import datetime, date
+import sys
+import subprocess
+import os
+
 
 
 class AddCmr(QMainWindow):
@@ -518,3 +522,71 @@ class AddCmr(QMainWindow):
         print(f'cmr_id: {self.cmr_id}')
         self.add_details.show()
 
+    def get_cmr_id(self):
+        # Questo metodo restituisce il cmr_id corrente
+        return self.cmr_id
+
+    def stampa_cmr(parent, cmr_id):
+        # Percorso al file .jasper
+        report_file = "C:/Users/stefano.LVZZ/JaspersoftWorkspace/MyReports/CMR.jasper"
+        # Directory in cui verrà generato il PDF
+        output_dir = "C:/Users/stefano.LVZZ/Desktop/"
+        output_pdf = os.path.join(output_dir, "CMR.pdf")
+        db_path = "C:/Users/stefano.LVZZ/PycharmProjects/cmrProject/app.db"
+        jdbc_dir = "C:/Users/stefano.LVZZ/PycharmProjects/cmrProject/drivers"
+
+        # Comando per eseguire JasperStarter
+        command = [
+            "java",
+            "-Djava.ext.dirs=" + jdbc_dir,  # Specifica la directory dei driver JDBC
+            "-jar", "C:/Program Files (x86)/JasperStarter/lib/jasperstarter.jar",
+            "pr", report_file,
+            "-f", "pdf",
+            "-o", output_dir,
+            "-t", "generic",
+            "--db-driver", "org.sqlite.JDBC",
+            "--db-url", f"jdbc:sqlite:{db_path}",
+            "-P", f"cmr_id={cmr_id}"  # Passa il parametro cmr_id
+
+        ]
+
+        # # con parametro
+        # command = [
+        #     '"C:/Program Files (x86)/JasperStarter/bin/jasperstarter"',
+        #     "pr", report_file,
+        #     "-f", "pdf",
+        #     "-o", output_dir,
+        #     "-t", "generic",
+        #     "--db-driver", "org.sqlite.JDBC",
+        #     "--db-url", f"jdbc:sqlite:{db_path}",
+        #     "-P", f"cmr_id={cmr_id}"  # Passa il parametro cmr_id
+        # ]
+        print(f"Running command: {' '.join(command)}")
+
+        # Esecuzione del comando
+        result = subprocess.run(command, capture_output=True, text=True)
+
+        print(f"Return code: {result.returncode}")
+        print(f"Stdout: {result.stdout}")
+        print(f"Stderr: {result.stderr}")
+
+        # Verifica l'output del comando
+        if result.returncode == 0:
+            QMessageBox.information(parent, "Successo", "Report generato con successo!")
+            # Apri il PDF generato
+            print(f"output_pdf: {output_pdf}")
+            parent.open_pdf(output_pdf)
+        else:
+            QMessageBox.critical(parent, "Errore", f"Errore nella generazione del report:\n{result.stderr}")
+
+    def open_pdf(self, pdf_path):
+        # Apri il PDF con l'applicazione di default del sistema operativo
+        if os.path.exists(pdf_path):
+            if sys.platform == "win32":
+                os.startfile(pdf_path)
+            elif sys.platform == "darwin":
+                subprocess.call(["open", pdf_path])
+            else:
+                subprocess.call(["xdg-open", pdf_path])
+        else:
+            QMessageBox.warning(self, "Errore", f"Il file {pdf_path} non esiste.")

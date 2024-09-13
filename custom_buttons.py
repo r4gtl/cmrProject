@@ -27,6 +27,11 @@ def setup_toolbar(parent):
     tb.addAction(addSave)
     # addSave.triggered.connect(parent.func_add_save)
 
+    printCMR = QAction(QIcon('icons/printer.png'), "Stampa", parent)
+    printCMR.triggered.connect(lambda: parent.stampa_cmr(parent.get_cmr_id()))
+    tb.addAction(printCMR)
+    # self.tb.addSeparator()
+
     deleteCmr = QAction(QIcon('icons/delete-folder.png'), "Elimina", parent)
     tb.addAction(deleteCmr)
     # deleteCmr.triggered.connect(parent.func_delete_cmr)
@@ -84,3 +89,5 @@ def custom_delete_cmr(parent):
             parent.close()
     else:
         QMessageBox.warning(parent, "Elimina", "Nessun CMR da eliminare!")
+
+

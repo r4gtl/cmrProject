@@ -4,10 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d0ac0911-2230-4513-aefb-8fbfb182cc51" name="Changes" comment="Modifiche ai modelli per il dettaglio Cmr">
+    <list default="true" id="d0ac0911-2230-4513-aefb-8fbfb182cc51" name="Changes" comment="Fixxing some issues to CMR Details">
+      <change afterPath="$PROJECT_DIR$/icons/printer.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/db/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/custom_buttons.py" beforeDir="false" afterPath="$PROJECT_DIR$/custom_buttons.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gui/add_cmr_details.py" beforeDir="false" afterPath="$PROJECT_DIR$/gui/add_cmr_details.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gui/cmr.py" beforeDir="false" afterPath="$PROJECT_DIR$/gui/cmr.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,7 +58,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-python-sdk-975db3bf15a3-31b6be0877a2-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-241.18034.82" />
+        <option value="bundled-python-sdk-babbdf50b680-746f403e7f0c-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-241.15989.155" />
       </set>
     </attachedChunks>
   </component>
@@ -165,7 +167,15 @@
       <option name="project" value="LOCAL" />
       <updated>1719949293631</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Fixxing some issues to CMR Details">
+      <option name="closed" value="true" />
+      <created>1720190634934</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1720190634934</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -178,6 +188,7 @@
     <MESSAGE value="Saving CMR" />
     <MESSAGE value="Get CMR" />
     <MESSAGE value="Modifiche ai modelli per il dettaglio Cmr" />
-    <option name="LAST_COMMIT_MESSAGE" value="Modifiche ai modelli per il dettaglio Cmr" />
+    <MESSAGE value="Fixxing some issues to CMR Details" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixxing some issues to CMR Details" />
   </component>
 </project>
