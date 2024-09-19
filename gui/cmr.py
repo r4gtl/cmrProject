@@ -10,7 +10,8 @@ from datetime import datetime, date
 import sys
 import subprocess
 import os
-
+# Importa PROJECT_DIR dal modulo di configurazione
+from settings import PROJECT_DIR
 
 
 class AddCmr(QMainWindow):
@@ -526,45 +527,91 @@ class AddCmr(QMainWindow):
         # Questo metodo restituisce il cmr_id corrente
         return self.cmr_id
 
+    # def stampa_cmr(parent, cmr_id):
+    #     # Percorso al file .jasper
+    #     report_file = "C:/Users/stefano.LVZZ/JaspersoftWorkspace/MyReports/CMR.jasper"
+    #     # Directory in cui verrà generato il PDF
+    #     output_dir = "C:/Users/stefano.LVZZ/Desktop/"
+    #     output_pdf = os.path.join(output_dir, "CMR.pdf")
+    #     db_path = "C:/Users/stefano.LVZZ/PycharmProjects/cmrProject/app.db"
+    #     jdbc_dir = "C:/Users/stefano.LVZZ/PycharmProjects/cmrProject/drivers"
+    #
+    #     # Comando per eseguire JasperStarter
+    #     command = [
+    #         "java",
+    #         "-Djava.ext.dirs=" + jdbc_dir,  # Specifica la directory dei driver JDBC
+    #         "-jar", "C:/Program Files (x86)/JasperStarter/lib/jasperstarter.jar",
+    #         "pr", report_file,
+    #         "-f", "pdf",
+    #         "-o", output_dir,
+    #         "-t", "generic",
+    #         "--db-driver", "org.sqlite.JDBC",
+    #         "--db-url", f"jdbc:sqlite:{db_path}",
+    #         "-P", f"cmr_id={cmr_id}"  # Passa il parametro cmr_id
+    #
+    #     ]
+    #
+    #     # # con parametro
+    #     # command = [
+    #     #     '"C:/Program Files (x86)/JasperStarter/bin/jasperstarter"',
+    #     #     "pr", report_file,
+    #     #     "-f", "pdf",
+    #     #     "-o", output_dir,
+    #     #     "-t", "generic",
+    #     #     "--db-driver", "org.sqlite.JDBC",
+    #     #     "--db-url", f"jdbc:sqlite:{db_path}",
+    #     #     "-P", f"cmr_id={cmr_id}"  # Passa il parametro cmr_id
+    #     # ]
+    #     print(f"Running command: {' '.join(command)}")
+    #
+    #     # Esecuzione del comando
+    #     result = subprocess.run(command, capture_output=True, text=True)
+    #
+    #     print(f"Return code: {result.returncode}")
+    #     print(f"Stdout: {result.stdout}")
+    #     print(f"Stderr: {result.stderr}")
+    #
+    #     # Verifica l'output del comando
+    #     if result.returncode == 0:
+    #         QMessageBox.information(parent, "Successo", "Report generato con successo!")
+    #         # Apri il PDF generato
+    #         print(f"output_pdf: {output_pdf}")
+    #         parent.open_pdf(output_pdf)
+    #     else:
+    #         QMessageBox.critical(parent, "Errore", f"Errore nella generazione del report:\n{result.stderr}")
+
     def stampa_cmr(parent, cmr_id):
         # Percorso al file .jasper
-        report_file = "C:/Users/stefano.LVZZ/JaspersoftWorkspace/MyReports/CMR.jasper"
+
+        # Costruisci il percorso relativo al file .jasper
+        report_file = os.path.join(PROJECT_DIR, "reports", "cmr.jasper")
+
+        # report_file = "C:/Users/stefano.LVZZ/JaspersoftWorkspace/MyReports/CMR.jasper"
         # Directory in cui verrà generato il PDF
         output_dir = "C:/Users/stefano.LVZZ/Desktop/"
-        output_pdf = os.path.join(output_dir, "CMR.pdf")
+        output_pdf = os.path.join(output_dir, "cmr.pdf")
         db_path = "C:/Users/stefano.LVZZ/PycharmProjects/cmrProject/app.db"
-        jdbc_dir = "C:/Users/stefano.LVZZ/PycharmProjects/cmrProject/drivers"
+        driver_path = "C:/Users/stefano.LVZZ/PycharmProjects/cmrProject/drivers/sqlite-jdbc-3.46.0.0.jar"
 
-        # Comando per eseguire JasperStarter
+        print(f"output_dir: {output_dir}")
+
+        # Comando aggiornato per eseguire JasperStarter con -classpath
         command = [
-            "java",
-            "-Djava.ext.dirs=" + jdbc_dir,  # Specifica la directory dei driver JDBC
-            "-jar", "C:/Program Files (x86)/JasperStarter/lib/jasperstarter.jar",
+            'C:/Program Files (x86)/Java/jre1.8.0_421/bin/java',  # Percorso al binario di Java 8
+            "-classpath", driver_path + ";C:/Program Files (x86)/JasperStarter/lib/jasperstarter.jar",
+            "de.cenote.jasperstarter.App",
             "pr", report_file,
             "-f", "pdf",
             "-o", output_dir,
             "-t", "generic",
             "--db-driver", "org.sqlite.JDBC",
             "--db-url", f"jdbc:sqlite:{db_path}",
-            "-P", f"cmr_id={cmr_id}"  # Passa il parametro cmr_id
-
+            "-P", f"cmr_id={cmr_id}"
         ]
 
-        # # con parametro
-        # command = [
-        #     '"C:/Program Files (x86)/JasperStarter/bin/jasperstarter"',
-        #     "pr", report_file,
-        #     "-f", "pdf",
-        #     "-o", output_dir,
-        #     "-t", "generic",
-        #     "--db-driver", "org.sqlite.JDBC",
-        #     "--db-url", f"jdbc:sqlite:{db_path}",
-        #     "-P", f"cmr_id={cmr_id}"  # Passa il parametro cmr_id
-        # ]
         print(f"Running command: {' '.join(command)}")
 
-        # Esecuzione del comando
-        result = subprocess.run(command, capture_output=True, text=True)
+        result = subprocess.run(command, capture_output=True, text=True, shell=True)
 
         print(f"Return code: {result.returncode}")
         print(f"Stdout: {result.stdout}")
@@ -574,7 +621,6 @@ class AddCmr(QMainWindow):
         if result.returncode == 0:
             QMessageBox.information(parent, "Successo", "Report generato con successo!")
             # Apri il PDF generato
-            print(f"output_pdf: {output_pdf}")
             parent.open_pdf(output_pdf)
         else:
             QMessageBox.critical(parent, "Errore", f"Errore nella generazione del report:\n{result.stderr}")
